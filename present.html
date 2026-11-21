@@ -2,16 +2,124 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080d0e"><title>AICANFEEL — Nightshift presentation</title>
 <style>
 :root{color-scheme:dark}*{box-sizing:border-box}html,body{margin:0;height:100%;background:#080d0e;overflow:hidden}main{width:100%;height:100%;display:grid;place-items:center}video{display:block;width:min(100vw,177.77778vh);height:auto;aspect-ratio:16/9;object-fit:contain;background:#080d0e}nav{position:fixed;right:2.2vw;top:2.2vh;display:flex;align-items:center;gap:12px;background:#0d1214ee;color:#e4ebdf;border:1px solid #89998b99;padding:8px 13px;border-radius:30px;opacity:0;pointer-events:none;transition:opacity .16s;font:12px/1.2 monospace}nav.active,nav:focus-within{opacity:1;pointer-events:auto}nav a,button{color:inherit;border:0;background:transparent;font:inherit;text-decoration:none;cursor:pointer}nav i{width:15px;height:1px;background:#8c988d}button:focus-visible,a:focus-visible{outline:1px solid #cdd9b3;outline-offset:3px}
-</style></head><body><main><video id="screen" src="./presentation/nightshift-1080p60.mp4?edition=contour-field" poster="./presentation/opening.webp?edition=contour-field" muted playsinline loop preload="auto" aria-label="AICANFEEL Nightshift six-performer studio with contour scans and a particle field"></video></main>
+</style></head><body><main><video id="screen" poster="./presentation/opening.webp?edition=contour-field-uhd" muted playsinline loop preload="auto" aria-label="AICANFEEL Nightshift six-performer studio with contour scans and a particle field"></video></main>
 <nav aria-label="Presentation controls"><button id="play" type="button">Pause</button><i></i><button id="full" type="button">Fullscreen</button><i></i><a href="./">Live studio</a></nav>
 <script>
-const screen=document.getElementById('screen'),menu=document.querySelector('nav'),play=document.getElementById('play');
-let hideTimer;function show(){clearTimeout(hideTimer);menu.classList.add('active');hideTimer=setTimeout(()=>menu.classList.remove('active'),1700)}
-function toggle(){if(screen.paused)screen.play().catch(show);else screen.pause();show()}
-async function full(){if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else if(screen.webkitEnterFullscreen)screen.webkitEnterFullscreen()}
-play.onclick=toggle;document.getElementById('full').onclick=()=>full().catch(show);screen.onpause=()=>play.textContent='Play';screen.onplay=()=>play.textContent='Pause';screen.onerror=()=>{show();clearTimeout(hideTimer)};
-document.addEventListener('pointermove',show,{passive:true});document.addEventListener('pointerdown',show,{passive:true});document.addEventListener('keydown',e=>{if(e.repeat||e.altKey||e.ctrlKey||e.metaKey)return;if(e.code==='Space'&&e.target===document.body){e.preventDefault();toggle()}if(e.key.toLowerCase()==='f')full().catch(show)});
-const quiet=matchMedia('(prefers-reduced-motion: reduce)');
-quiet.addEventListener('change',()=>{if(quiet.matches)screen.pause()});
-if(quiet.matches)play.textContent='Play';
-else screen.play().catch(()=>{show();clearTimeout(hideTimer);play.textContent='Play'});</script></body></html>
+const movie = document.getElementById('screen');
+const menu = document.querySelector('nav');
+const play = document.getElementById('play');
+const quiet = matchMedia('(prefers-reduced-motion: reduce)');
+const sources = {
+  hd: './presentation/nightshift-1080p60.mp4?edition=contour-field-uhd',
+  uhd: './presentation/nightshift-2160p60.mp4?edition=contour-field-uhd',
+};
+let selected = '';
+let uhdFailed = false;
+let wantsPlayback = !quiet.matches;
+let generation = 0;
+let restoreTime = 0;
+let resizeTimer, hideTimer, loadTimer;
+
+function show() {
+  clearTimeout(hideTimer);
+  menu.classList.add('active');
+  hideTimer = setTimeout(() => menu.classList.remove('active'), 1700);
+}
+function showPlaybackControl() {
+  show();
+  clearTimeout(hideTimer);
+  play.textContent = 'Play';
+}
+function tryPlayback() {
+  if (!wantsPlayback) return;
+  const current = generation;
+  movie.play().catch(error => {
+    if (current !== generation || error.name === 'AbortError' || !wantsPlayback) return;
+    if (selected === 'uhd' && error.name === 'NotSupportedError') return fallback();
+    wantsPlayback = false;
+    showPlaybackControl();
+  });
+}
+function load(tier) {
+  if (selected === tier) return;
+  if (movie.readyState >= 1 && !movie.error) restoreTime = movie.currentTime;
+  generation++;
+  selected = tier;
+  clearTimeout(loadTimer);
+  movie.src = sources[tier];
+  movie.load();
+  if (tier === 'uhd') {
+    loadTimer = setTimeout(() => {
+      if (selected === 'uhd' && wantsPlayback && movie.readyState < 2) fallback();
+    }, 14000);
+  }
+  tryPlayback();
+}
+function fallback() {
+  if (selected !== 'uhd') return;
+  uhdFailed = true;
+  load('hd');
+}
+function choose() {
+  const width = Math.round(movie.getBoundingClientRect().width * (devicePixelRatio || 1));
+  const canDecode = movie.canPlayType('video/mp4; codecs="avc1.640034"');
+  load(width > 1920 && canDecode && !uhdFailed ? 'uhd' : 'hd');
+}
+function scheduleChoice() {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(choose, 180);
+}
+function watchDensity() {
+  const query = matchMedia('(resolution: ' + devicePixelRatio + 'dppx)');
+  query.addEventListener('change', () => { watchDensity(); scheduleChoice(); }, {once:true});
+}
+movie.addEventListener('loadedmetadata', () => {
+  if (restoreTime && Number.isFinite(movie.duration)) {
+    movie.currentTime = Math.min(restoreTime, Math.max(0, movie.duration - 1/60));
+  }
+});
+movie.addEventListener('loadeddata', () => clearTimeout(loadTimer));
+movie.addEventListener('canplay', () => { if (wantsPlayback && movie.paused) tryPlayback(); });
+movie.addEventListener('timeupdate', () => {
+  if (movie.readyState >= 2 && !movie.seeking) restoreTime = movie.currentTime;
+});
+movie.addEventListener('error', () => {
+  if (!movie.error) return;
+  clearTimeout(loadTimer);
+  if (selected === 'uhd') fallback();
+  else { wantsPlayback = false; showPlaybackControl(); }
+});
+movie.addEventListener('play', () => play.textContent = 'Pause');
+movie.addEventListener('pause', () => play.textContent = 'Play');
+function toggle() {
+  wantsPlayback = movie.paused;
+  if (wantsPlayback) tryPlayback();
+  else movie.pause();
+  show();
+}
+async function full() {
+  if (document.fullscreenElement) await document.exitFullscreen();
+  else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+  else if (movie.webkitEnterFullscreen) movie.webkitEnterFullscreen();
+}
+play.onclick = toggle;
+document.getElementById('full').onclick = () => full().catch(show);
+window.addEventListener('resize', scheduleChoice, {passive:true});
+document.addEventListener('fullscreenchange', scheduleChoice);
+document.addEventListener('pointermove', show, {passive:true});
+document.addEventListener('pointerdown', show, {passive:true});
+document.addEventListener('keydown', event => {
+  if (event.repeat || event.altKey || event.ctrlKey || event.metaKey) return;
+  if (event.code === 'Space' && event.target === document.body) {
+    event.preventDefault();
+    toggle();
+  }
+  if (event.key.toLowerCase() === 'f') full().catch(show);
+});
+quiet.addEventListener('change', () => {
+  if (quiet.matches) { wantsPlayback = false; movie.pause(); }
+});
+if (!wantsPlayback) play.textContent = 'Play';
+watchDensity();
+choose();
+</script></body></html>
