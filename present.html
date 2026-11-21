@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080d0e"><title>AICANFEEL — Nightshift presentation</title>
 <style>
 :root{color-scheme:dark}*{box-sizing:border-box}html,body{margin:0;height:100%;background:#080d0e;overflow:hidden}main{width:100%;height:100%;display:grid;place-items:center}video{display:block;width:min(100vw,177.77778vh);height:auto;aspect-ratio:16/9;object-fit:contain;background:#080d0e}nav{position:fixed;right:2.2vw;top:2.2vh;display:flex;align-items:center;gap:12px;background:#0d1214ee;color:#e4ebdf;border:1px solid #89998b99;padding:8px 13px;border-radius:30px;opacity:0;pointer-events:none;transition:opacity .16s;font:12px/1.2 monospace}nav.active,nav:focus-within{opacity:1;pointer-events:auto}nav a,button{color:inherit;border:0;background:transparent;font:inherit;text-decoration:none;cursor:pointer}nav i{width:15px;height:1px;background:#8c988d}button:focus-visible,a:focus-visible{outline:1px solid #cdd9b3;outline-offset:3px}
-</style></head><body><main><video id="screen" poster="./presentation/opening.webp?edition=contour-field-uhd" muted playsinline loop preload="auto" aria-label="AICANFEEL Nightshift six-performer studio with contour scans and a particle field"></video></main>
+</style></head><body><main><video id="screen" poster="./presentation/opening.webp?edition=cast-workflow" muted playsinline loop preload="auto" aria-label="AICANFEEL Nightshift six-performer studio with its connected cast workflow"></video></main>
 <nav aria-label="Presentation controls"><button id="play" type="button">Pause</button><i></i><button id="full" type="button">Fullscreen</button><i></i><a href="./">Live studio</a></nav>
 <script>
 const movie = document.getElementById('screen');
@@ -10,8 +10,8 @@ const menu = document.querySelector('nav');
 const play = document.getElementById('play');
 const quiet = matchMedia('(prefers-reduced-motion: reduce)');
 const sources = {
-  hd: './presentation/nightshift-1080p60.mp4?edition=contour-field-uhd',
-  uhd: './presentation/nightshift-2160p60.mp4?edition=contour-field-uhd',
+  hd: './presentation/nightshift-1080p60.mp4?edition=cast-workflow',
+  uhd: './presentation/nightshift-2160p60.mp4?edition=cast-workflow',
 };
 let selected = '';
 let uhdFailed = false;
