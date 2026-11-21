@@ -16,7 +16,7 @@
     <meta property="og:title" content="AICANFEEL — Nightshift" />
     <meta property="og:description" content="Explore the cast, lighting and shots inside the Nightshift production studio." />
     <meta property="og:url" content="https://global0809.github.io/aicanfeel-nightshift/" />
-    <meta property="og:image" content="https://global0809.github.io/aicanfeel-nightshift/presentation/opening.webp?edition=cast-workflow" />
+    <meta property="og:image" content="https://global0809.github.io/aicanfeel-nightshift/presentation/nightshift-studio-opening.webp" />
     <meta property="og:image:alt" content="Six Nightshift performers connected to a live production workflow." />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="./assets/brand/mark.svg" type="image/svg+xml" />
@@ -26,8 +26,8 @@
         Math.min(innerWidth / 1600, innerHeight / 900),
       );
     </script>
-    <script type="module" crossorigin src="./assets/index-9aLEd_pM.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-zd5ITnAk.css">
+    <script type="module" crossorigin src="./assets/index-Bb4CBCPf.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DAqdlk66.css">
   </head>
   <body>
     <main id="frame" aria-label="AICANFEEL Stagecraft production studio">
@@ -180,13 +180,13 @@
           </div>
         </section>
         <section class="deck" aria-label="Live production monitors">
-          <section class="instrument hero-panel">
+          <section class="instrument hero-panel" data-workflow-stage="rouge">
             <header class="panel-head">
               <h2>Turnaround</h2>
               <div class="station-actions">
                 <div id="pass-tabs" class="segmented">
                   <button data-pass="beauty" aria-pressed="true">Beauty</button
-                  ><button data-pass="wire" aria-pressed="false">Wire</button
+                  ><button data-pass="wire" aria-pressed="false">Mesh</button
                   ><button data-pass="scan" aria-pressed="false">Scan</button>
                 </div>
                 <a
@@ -213,7 +213,7 @@
               </div>
             </div>
           </section>
-          <section class="instrument scan-panel">
+          <section class="instrument scan-panel" data-workflow-stage="volt onyx">
             <header class="panel-head">
               <h2>Face scan</h2>
             </header>
@@ -230,7 +230,7 @@
               <div id="cast-strip" aria-label="Select scan subject"></div>
             </div>
           </section>
-          <section class="instrument wardrobe-panel">
+          <section class="instrument wardrobe-panel" data-workflow-stage="sable">
             <header class="panel-head">
               <h2>Wardrobe</h2>
               <a
@@ -257,9 +257,9 @@
               ><button data-asset="cuff">Cuff</button>
             </div>
           </section>
-          <section class="instrument output-panel">
+          <section class="instrument output-panel" data-workflow-stage="veil">
             <header class="panel-head">
-              <h2>Output</h2>
+              <h2>Shot output</h2>
               <button
                 id="program-pass"
                 class="field-button"
@@ -290,7 +290,7 @@
           </section>
         </section>
         <section class="signal-desk" aria-label="Lighting, motion and sequence">
-          <section class="lighting-panel instrument">
+          <section class="lighting-panel instrument" data-workflow-stage="sable">
             <header class="panel-head">
               <h2>Lighting</h2>
             </header>
@@ -316,7 +316,7 @@
               </div>
             </div>
           </section>
-          <section class="scope-panel instrument">
+          <section class="scope-panel instrument" data-workflow-stage="veil">
             <header class="panel-head">
               <h2>Signal</h2>
               <button id="scope-mode" class="field-button">
@@ -328,7 +328,7 @@
               <span id="scope-level"></span>
             </div>
           </section>
-          <section class="motion-station instrument">
+          <section class="motion-station instrument" data-workflow-stage="relay">
             <header class="panel-head">
               <h2>Motion</h2>
               <a
@@ -361,8 +361,17 @@
             <div class="tracks">
               <div class="ruler" id="ruler"></div>
               <div class="clips" id="clips"></div>
-              <div class="wave-track" id="wave-track">
-                <canvas id="audio-wave"></canvas>
+              <div
+                class="wave-track"
+                id="wave-track"
+                tabindex="0"
+                role="slider"
+                aria-label="Sequence position"
+                aria-valuemin="0"
+                aria-valuemax="22.5"
+                aria-valuenow="0"
+              >
+                <canvas id="audio-wave" aria-hidden="true"></canvas>
               </div>
               <div class="playhead" id="playhead"><i></i></div>
             </div>
