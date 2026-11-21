@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#090d0e" />
+    <title>AICANFEEL Stagecraft — Nightshift Ensemble</title>
+    <meta
+      name="description"
+      content="Nightshift, a six-performer motion-production studio by AICANFEEL."
+    />
+    <link rel="icon" href="./assets/brand/mark.svg" type="image/svg+xml" />
+    <script>
+      document.documentElement.style.setProperty(
+        '--scale',
+        Math.min(innerWidth / 1600, innerHeight / 900),
+      );
+    </script>
+    <script type="module" crossorigin src="./assets/index-DpqUv0LY.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DDfX32K0.css">
+  </head>
+  <body>
+    <main id="frame" aria-label="AICANFEEL Stagecraft production studio">
+      <div id="studio">
+        <header class="masthead">
+          <div class="identity">
+            <img
+              class="wordmark"
+              src="./assets/brand/aicanfeel.webp"
+              alt="AICANFEEL"
+            />
+            <span class="mast-rule" aria-hidden="true"></span>
+            <h1 class="session-name">Nightshift</h1>
+          </div>
+          <div class="mast-tools">
+            <span class="live-dot" aria-label="Live"></span
+            ><output id="timecode">00:00:00:00</output>
+            <div class="command-pill">
+              <button type="button" id="autopilot" aria-pressed="true">
+                <i data-icon="rotate"></i
+                ><span id="autopilot-text">Live</span></button
+              ><i class="pill-rule"></i
+              ><button
+                id="fullscreen"
+                type="button"
+                aria-label="Fullscreen"
+                title="Fullscreen (F)"
+              >
+                <i data-icon="fullscreen"></i>
+              </button>
+            </div>
+          </div>
+        </header>
+        <section class="cast-stage" aria-label="Six-person Nightshift cast">
+          <div class="photo-stage">
+            <div id="cast-backdrop" aria-hidden="true"></div>
+            <div class="cast-floor"></div>
+            <div id="cast-wall" aria-label="Nightshift performers">
+              <img
+                id="cast-master"
+                class="cast-master"
+                alt="Volt, Onyx, Rouge, Sable, Relay and Veil in their Nightshift looks."
+                src="./assets/cast/ensemble-preview.webp"
+                fetchpriority="high"
+              />
+              <button
+                class="cast-figure"
+                type="button"
+                data-performer="volt"
+                aria-label="Inspect Volt"
+              >
+              </button>
+              <button
+                class="cast-figure"
+                type="button"
+                data-performer="onyx"
+                aria-label="Inspect Onyx"
+              >
+              </button>
+              <button
+                class="cast-figure"
+                type="button"
+                data-performer="rouge"
+                aria-label="Inspect Rouge"
+              >
+              </button>
+              <button
+                class="cast-figure"
+                type="button"
+                data-performer="sable"
+                aria-label="Inspect Sable"
+              >
+              </button>
+              <button
+                class="cast-figure"
+                type="button"
+                data-performer="relay"
+                aria-label="Inspect Relay"
+              >
+              </button>
+              <button
+                class="cast-figure"
+                type="button"
+                data-performer="veil"
+                aria-label="Inspect Veil"
+              >
+              </button>
+            </div>
+          </div>
+          <div id="cast-labels" class="cast-labels">
+            <button
+              class="cast-label"
+              type="button"
+              data-performer="volt"
+              aria-pressed="true"
+            >
+              <span class="cast-name">Volt</span>
+            </button>
+            <button
+              class="cast-label"
+              type="button"
+              data-performer="onyx"
+              aria-pressed="false"
+            >
+              <span class="cast-name">Onyx</span>
+            </button>
+            <button
+              class="cast-label"
+              type="button"
+              data-performer="rouge"
+              aria-pressed="false"
+            >
+              <span class="cast-name">Rouge</span>
+            </button>
+            <button
+              class="cast-label"
+              type="button"
+              data-performer="sable"
+              aria-pressed="false"
+            >
+              <span class="cast-name">Sable</span>
+            </button>
+            <button
+              class="cast-label"
+              type="button"
+              data-performer="relay"
+              aria-pressed="false"
+            >
+              <span class="cast-name">Relay</span>
+            </button>
+            <button
+              class="cast-label"
+              type="button"
+              data-performer="veil"
+              aria-pressed="false"
+            >
+              <span class="cast-name">Veil</span>
+            </button>
+          </div>
+        </section>
+        <section class="deck" aria-label="Live production monitors">
+          <section class="instrument hero-panel">
+            <header class="panel-head">
+              <h2>Turnaround</h2>
+              <div class="station-actions">
+                <div id="pass-tabs" class="segmented">
+                  <button data-pass="beauty" aria-pressed="true">Beauty</button
+                  ><button data-pass="wire" aria-pressed="false">Wire</button
+                  ><button data-pass="scan" aria-pressed="false">Scan</button>
+                </div>
+                <a
+                  class="download-link"
+                  id="character-export"
+                  href="./assets/ensemble/volt.glb"
+                  download="AICANFEEL-Volt.glb"
+                  aria-label="Download cast geometry"
+                  ><i data-icon="download"></i></a
+                >
+              </div>
+            </header>
+            <div id="volume" class="volume">
+              <div id="volume-light"></div>
+              <div id="turntable">
+                <img
+                  class="ensemble-poster"
+                  alt="Six character turnarounds"
+                  src="./assets/ensemble/fashion-lineup.webp"
+                />
+              </div>
+              <div class="orbit-readout">
+                <output id="orbit-angle">006°</output>
+              </div>
+            </div>
+          </section>
+          <section class="instrument scan-panel">
+            <header class="panel-head">
+              <h2>Face scan</h2>
+            </header>
+            <div class="face-inset">
+              <div class="face-stage">
+                <div id="scan-picture"></div>
+                <i class="scan-beam" id="scan-beam"></i>
+              </div>
+              <div class="scan-meta">
+                <strong id="scan-name">Volt</strong>
+              </div>
+            </div>
+            <div class="technical-foot">
+              <div id="cast-strip" aria-label="Select scan subject"></div>
+            </div>
+          </section>
+          <section class="instrument wardrobe-panel">
+            <header class="panel-head">
+              <h2>Wardrobe</h2>
+              <a
+                id="accessory-export"
+                class="download-link"
+                href="./assets/wardrobe/visor.glb"
+                download
+                aria-label="Download the selected accessory"
+                ><i data-icon="download"></i></a
+              >
+            </header>
+            <div class="accessory-space">
+              <div id="optics">
+                <img
+                  class="accessory-poster"
+                  alt=""
+                  src="./assets/wardrobe/visor-poster.webp"
+                />
+              </div>
+            </div>
+            <div class="wardrobe-tabs" id="wardrobe-tabs">
+              <button data-asset="visor">Visor</button
+              ><button data-asset="chain">Chain</button
+              ><button data-asset="cuff">Cuff</button>
+            </div>
+          </section>
+          <section class="instrument output-panel">
+            <header class="panel-head">
+              <h2>Output</h2>
+              <button
+                id="program-pass"
+                class="field-button"
+                title="Change output pass"
+                aria-label="Change output pass"
+              >
+                <i data-icon="swap"></i>
+              </button>
+            </header>
+            <div class="program" id="program">
+              <canvas
+                id="program-canvas"
+                aria-label="Live shot output"
+              ></canvas>
+              <div class="program-vignette"></div>
+            </div>
+            <div class="shot-info">
+              <strong id="shot-name">Arc light</strong
+              ><span id="lens-readout">24 mm</span
+              ><button
+                id="save-frame"
+                title="Save program frame"
+                aria-label="Download current frame"
+              >
+                <i data-icon="download"></i>
+              </button>
+            </div>
+          </section>
+        </section>
+        <section class="signal-desk" aria-label="Lighting, motion and sequence">
+          <section class="lighting-panel instrument">
+            <header class="panel-head">
+              <h2>Lighting</h2>
+            </header>
+            <div class="look-body">
+              <div class="surface-station">
+                <div id="surface-probe">
+                  <img
+                    class="surface-poster"
+                    alt=""
+                    src="./assets/surfaces/chrome-still.webp"
+                  />
+                </div>
+                <div class="surface-field">
+                  <b id="surface-title">Visor chrome</b>
+                  <div id="material-swatches"></div>
+                </div>
+              </div>
+              <div class="light-body">
+                <div class="light-wheel" id="light-wheel">
+                  <div aria-hidden="true"></div>
+                </div>
+                <div id="light-values"></div>
+              </div>
+            </div>
+          </section>
+          <section class="scope-panel instrument">
+            <header class="panel-head">
+              <h2>Signal</h2>
+              <button id="scope-mode" class="field-button">
+                LUMA <i data-icon="swap"></i>
+              </button>
+            </header>
+            <div class="scope-space"><canvas id="scope-canvas"></canvas></div>
+            <div class="technical-foot">
+              <span id="scope-level"></span>
+            </div>
+          </section>
+          <section class="motion-station instrument">
+            <header class="panel-head">
+              <h2>Motion</h2>
+              <a
+                id="rig-export"
+                class="download-link"
+                href="./assets/turntable/vesper-textured.glb"
+                download="AICANFEEL-Vesper-Rig.glb"
+                aria-label="Download the animated Vesper performance rig"
+                title="Download Vesper performance rig"
+                ><i data-icon="download"></i
+              ></a>
+            </header>
+            <canvas id="motion-canvas"></canvas>
+          </section>
+          <section class="timeline-panel instrument">
+            <header class="panel-head">
+              <h2>Sequence</h2>
+              <div class="transport">
+                <button id="audio-toggle" title="Guide track (M)">
+                  <i data-icon="mute"></i></button
+                ><button id="previous" title="Previous shot">
+                  <i data-icon="previous"></i></button
+                ><button id="play" title="Play or pause">
+                  <i data-icon="pause"></i></button
+                ><button id="next" title="Next shot">
+                  <i data-icon="next"></i>
+                </button>
+              </div>
+            </header>
+            <div class="tracks">
+              <div class="ruler" id="ruler"></div>
+              <div class="clips" id="clips"></div>
+              <div class="wave-track" id="wave-track">
+                <canvas id="audio-wave"></canvas>
+              </div>
+              <div class="playhead" id="playhead"><i></i></div>
+            </div>
+          </section>
+        </section>
+        <output id="engine-status" role="status" hidden></output>
+      </div>
+    </main>
+    <noscript>Enable JavaScript for the production studio.</noscript>
+  </body>
+</html>
