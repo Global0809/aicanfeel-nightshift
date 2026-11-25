@@ -1,0 +1,5 @@
+Mediabunny 1.66.4, by Vanilagy and contributors
+Source corresponding to the browser bundle:
+https://registry.npmjs.org/mediabunny/-/mediabunny-1.66.4.tgz
+Project: https://github.com/Vanilagy/mediabunny
+License: Mozilla Public License 2.0, included in mediabunny.txt
